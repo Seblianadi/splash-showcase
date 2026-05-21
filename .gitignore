@@ -9,3 +9,9 @@ Desktop.ini
 # Local server/cache artifacts
 __pycache__/
 *.log
+
+# Local media processing artifacts
+ffmpeg_tool/
+.ffmpeg-tool/
+_review/
+_originals_before_trim/
