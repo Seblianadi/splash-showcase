@@ -1,0 +1,11 @@
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Local editor and system files
+.idea/
+.vscode/
+
+# Local server/cache artifacts
+__pycache__/
+*.log

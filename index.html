@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Сплэши приложения: три концепции</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f1eb;
+      --panel: #ffffff;
+      --ink: #1d232b;
+      --muted: #68707a;
+      --line: #d8d2c8;
+      --accent: #0f766e;
+      --accent-2: #285e8e;
+      --warm: #a65f15;
+      --soft: #fdfaf4;
+      --shadow: 0 14px 40px rgba(29, 35, 43, 0.11);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      line-height: 1.45;
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(244, 241, 235, 0.94);
+      backdrop-filter: blur(16px);
+    }
+
+    .topbar-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 16px 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 5px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 760;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 820px;
+      font-size: clamp(28px, 3vw, 44px);
+      line-height: 1.04;
+    }
+
+    h2 {
+      font-size: clamp(23px, 2.1vw, 32px);
+      line-height: 1.12;
+    }
+
+    h3 {
+      font-size: 17px;
+      line-height: 1.22;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .filter-button,
+    .primary-button,
+    .ghost-button {
+      min-height: 36px;
+      border-radius: var(--radius);
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .filter-button,
+    .ghost-button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--ink);
+    }
+
+    .filter-button:hover,
+    .ghost-button:hover {
+      border-color: #aaa196;
+      background: #fffdf8;
+    }
+
+    .filter-button.is-active,
+    .primary-button {
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .primary-button:hover {
+      background: #0b625c;
+    }
+
+    .summary,
+    main {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding-left: 28px;
+      padding-right: 28px;
+    }
+
+    .summary {
+      padding-top: 26px;
+      padding-bottom: 12px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(310px, 0.65fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .lead {
+      max-width: 920px;
+      margin: 0;
+      color: #38424e;
+      font-size: 18px;
+    }
+
+    .quick-info {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: #fffaf1;
+      border-radius: var(--radius);
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 1px solid rgba(29, 35, 43, 0.08);
+      padding-bottom: 8px;
+    }
+
+    .metric:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .metric span:first-child {
+      color: var(--muted);
+    }
+
+    .metric span:last-child {
+      font-weight: 760;
+      text-align: right;
+    }
+
+    main {
+      padding-top: 8px;
+      padding-bottom: 58px;
+    }
+
+    .concept {
+      margin-top: 30px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+    }
+
+    .concept-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.48fr);
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .concept-copy {
+      max-width: 860px;
+      margin: 10px 0 0;
+      color: #48515d;
+    }
+
+    .rationale {
+      margin: 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent);
+      background: rgba(15, 118, 110, 0.08);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: #24423f;
+    }
+
+    .scenario-strip,
+    .scenario {
+      min-height: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--soft);
+      padding: 13px;
+    }
+
+    .scenario strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .scenario p {
+      margin: 0;
+      color: #4c5663;
+      font-size: 13px;
+    }
+
+    .subgroup {
+      margin-top: 20px;
+    }
+
+    .subgroup-title {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .subgroup-title h3 {
+      font-size: 19px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      border: 1px solid rgba(15, 118, 110, 0.2);
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.08);
+      color: #24534f;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 760;
+    }
+
+    .variant-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .variant {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 8px 28px rgba(29, 35, 43, 0.07);
+    }
+
+    .media-wrap {
+      position: relative;
+      background: #101318;
+      aspect-ratio: 16 / 9;
+    }
+
+    video,
+    .media-wrap img,
+    .dialog-media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: #101318;
+      object-fit: contain;
+    }
+
+    .variant-body {
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+    }
+
+    .variant-title {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .is-hidden {
+      display: none;
+    }
+
+    dialog {
+      width: min(1080px, calc(100vw - 36px));
+      border: 0;
+      border-radius: var(--radius);
+      background: var(--panel);
+      color: var(--ink);
+      padding: 0;
+      box-shadow: 0 18px 55px rgba(0, 0, 0, 0.28);
+    }
+
+    dialog::backdrop {
+      background: rgba(13, 17, 23, 0.72);
+    }
+
+    .dialog-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(290px, 0.55fr);
+      min-height: 520px;
+    }
+
+    .dialog-media {
+      background: #101318;
+    }
+
+    .viewer-media-hidden {
+      display: none;
+    }
+
+    .dialog-copy {
+      display: grid;
+      align-content: start;
+      gap: 14px;
+      padding: 22px;
+    }
+
+    .dialog-copy h2 {
+      font-size: 24px;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.48);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .footer-note {
+      margin: 24px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 1060px) {
+      .variant-grid,
+      .scenario-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .summary-grid,
+      .concept-head,
+      .dialog-body {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .topbar-inner {
+        grid-template-columns: 1fr;
+        padding: 14px 18px;
+      }
+
+      .filters {
+        justify-content: flex-start;
+      }
+
+      .summary,
+      main {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .variant-grid,
+      .scenario-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .lead {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <p class="eyebrow">Материал для выбора направления</p>
+        <h1>Сплэши приложения: три концепции</h1>
+      </div>
+      <nav class="filters" aria-label="Фильтры концепций">
+        <button class="filter-button is-active" type="button" data-filter="all">Все</button>
+        <button class="filter-button" type="button" data-filter="natural">1. Натура</button>
+        <button class="filter-button" type="button" data-filter="park">2. Парк-логотип</button>
+        <button class="filter-button" type="button" data-filter="business">3. Город</button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="summary">
+    <div class="summary-grid">
+      <p class="lead">
+        Логика презентации теперь строится вокруг трех больших концепций. Важно выбрать не один красивый ролик,
+        а систему первого впечатления: живой реализм по времени клиента, сезонный парк в форме логотипа или
+        деловой город со статусом, движением и жизнью.
+      </p>
+      <aside class="quick-info" aria-label="Сводка">
+        <div class="metric"><span>Концепций</span><span>3</span></div>
+        <div class="metric"><span>Роликов в подборке</span><span id="total-count">0</span></div>
+        <div class="metric"><span>Решение на встрече</span><span>выбрать систему, затем вариант</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <main>
+    <section class="concept" data-section="natural">
+      <div class="concept-head">
+        <div>
+          <p class="eyebrow">Концепция 1</p>
+          <h2>Натуралистичный подход</h2>
+          <p class="concept-copy">
+            Реалистичные короткие сцены, которые меняются по времени клиента. Утром это может быть росток и легкое
+            движение воздуха, вечером или ночью - звезда, небо и более тихий темп. Пользователь видит живую среду,
+            а не абстрактную заставку.
+          </p>
+        </div>
+        <p class="rationale">
+          Обоснование: самый человечный и мягкий подход. Он дает ощущение заботы и персонализации: приложение
+          будто реагирует на момент, в который его открыли.
+        </p>
+      </div>
+
+      <div class="scenario-strip">
+        <div class="scenario"><strong>Утро</strong><p>Росток, воздух, спокойное пробуждение.</p></div>
+        <div class="scenario"><strong>День</strong><p>Более светлая и ясная природная сцена.</p></div>
+        <div class="scenario"><strong>Вечер</strong><p>Мягкий свет, замедление, переход к ночи.</p></div>
+        <div class="scenario"><strong>Ночь</strong><p>Звезда, небо, тихий эмоциональный акцент.</p></div>
+      </div>
+
+      <div class="variant-grid" data-grid="natural"></div>
+    </section>
+
+    <section class="concept" data-section="park">
+      <div class="concept-head">
+        <div>
+          <p class="eyebrow">Концепция 2</p>
+          <h2>Клумба или парк в форме логотипа</h2>
+          <p class="concept-copy">
+            Логотип становится пространством: клумбой, парком или световой фигурой, которая может жить по сезонам.
+            Весной и летом появляется зелень, осенью падают листья, зимой на форму ложится снег. Дополнительно можно
+            делать дневную и ночную версии с подсветкой.
+          </p>
+        </div>
+        <p class="rationale">
+          Обоснование: самый брендовый и масштабируемый подход. Он превращает логотип в живой объект, который можно
+          развивать через сезоны, погоду, время суток и праздничные состояния.
+        </p>
+      </div>
+
+      <div class="scenario-strip">
+        <div class="scenario"><strong>Весна/лето</strong><p>Зелень, рост, свежий дневной сценарий.</p></div>
+        <div class="scenario"><strong>Осень</strong><p>Листья, теплая палитра, более камерный тон.</p></div>
+        <div class="scenario"><strong>Зима</strong><p>Снег на форме логотипа, чистый и спокойный образ.</p></div>
+        <div class="scenario"><strong>Ночь</strong><p>Подсветка самого знака или контура парка.</p></div>
+      </div>
+
+      <div class="variant-grid" data-grid="park"></div>
+    </section>
+
+    <section class="concept" data-section="business">
+      <div class="concept-head">
+        <div>
+          <p class="eyebrow">Концепция 3</p>
+          <h2>Деловой город: статус, движение, жизнь</h2>
+          <p class="concept-copy">
+            Более представительский путь: город, фасады, окна, движение и свет. Внутри концепции есть два подтипа:
+            3.1 - город как город, где сразу считывается масштаб; 3.2 - жилое или деловое здание, на котором
+            появляется логотип. Оба направления можно развести на день и ночь.
+          </p>
+        </div>
+        <p class="rationale">
+          Обоснование: подходит, если сплэш должен быть про статусность, надежность и ощущение активной городской
+          жизни. Это самый деловой и уверенный тон из трех.
+        </p>
+      </div>
+
+      <div class="subgroup" data-subgroup="business-city">
+        <div class="subgroup-title">
+          <h3>3.1 Город считывается напрямую</h3>
+          <span class="pill">масштаб</span>
+          <span class="pill">движение</span>
+          <span class="pill">день/ночь</span>
+        </div>
+        <div class="variant-grid" data-grid="business-city"></div>
+      </div>
+
+      <div class="subgroup" data-subgroup="business-building">
+        <div class="subgroup-title">
+          <h3>3.2 Здание, на котором появляется логотип</h3>
+          <span class="pill">фасад</span>
+          <span class="pill">статус</span>
+          <span class="pill">подсветка</span>
+        </div>
+        <div class="variant-grid" data-grid="business-building"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <dialog id="viewer">
+    <button class="close-button" type="button" aria-label="Закрыть" data-close>×</button>
+    <div class="dialog-body">
+      <div class="dialog-media">
+        <video id="viewer-video" controls autoplay muted playsinline></video>
+        <img id="viewer-image" class="viewer-media-hidden" alt="">
+      </div>
+      <div class="dialog-copy">
+        <p class="eyebrow" id="viewer-concept"></p>
+        <h2 id="viewer-title"></h2>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    const variants = [
+      {
+        concept: "natural",
+        grid: "natural",
+        title: "Утро: росток и легкий воздух",
+        file: "утро.mp4",
+        tags: ["утро", "росток", "персонализация"],
+        recommended: true,
+        copy: "Пример реалистичной утренней сцены: живой, спокойный вход в приложение, который можно включать по локальному времени клиента.",
+        note: "Хорошо объясняет механику концепции: приложение меняет настроение сплэша в зависимости от момента дня."
+      },
+      {
+        concept: "natural",
+        grid: "natural",
+        title: "Вечер/ночь: звезда и небо",
+        file: "вечер.mp4",
+        tags: ["ночь", "звезда", "тишина"],
+        copy: "Ночная версия той же логики: более эмоциональная, созерцательная сцена, которая не перегружает пользователя перед входом.",
+        note: "Показывать вместе с утренним вариантом: пара сразу объясняет идею смены сплэша по времени."
+      },
+      {
+        concept: "park",
+        grid: "park",
+        title: "Зеленый сплэш: парк-логотип",
+        file: "зеленыый сплэш.mp4",
+        tags: ["клумба", "зелень", "логотип"],
+        recommended: true,
+        copy: "Единственный пример второй концепции: логотип превращается в зеленую клумбу или парк, который дальше можно развивать по сезонам.",
+        note: "Показывать как отдельную систему: весной и летом зелень, осенью листья, зимой снег, ночью подсветка."
+      },
+      {
+        concept: "park",
+        grid: "park",
+        title: "Зимний вид: парк-логотип",
+        file: "winter-park-logo.jpeg",
+        media: "image",
+        tags: ["зима", "снег", "логотип"],
+        copy: "Зимняя версия второй концепции: тот же принцип парка в форме логотипа, но с сезонным состоянием.",
+        note: "Показывать рядом с зеленым сплэшем как пример масштабирования идеи по сезонам."
+      },
+      {
+        concept: "business",
+        grid: "business-city",
+        title: "3.1 Световой клевер над городом",
+        file: "59687fc505011f18dfee25a5bb3d626.mp4",
+        tags: ["логотип", "клевер", "ночь"],
+        recommended: true,
+        copy: "Городской вариант, где знак считывается на фоне ночного города. Это уже деловая концепция, но с более ярким брендовым жестом.",
+        note: "Отнести к третьей концепции: город и движение остаются основой, а клевер работает как световой брендовый акцент."
+      },
+      {
+        concept: "business",
+        grid: "business-city",
+        title: "3.1 Клевер с городской подсветкой",
+        file: "москва сити, бензиновый клевер.mp4",
+        tags: ["клевер", "подсветка", "ночь"],
+        copy: "Вариант, где знак живет через свет и городскую среду. Хорошо ложится в третью концепцию как ночная городская версия.",
+        note: "Показывать рядом с городскими пролетами: это более брендированный вариант делового города."
+      },
+      {
+        concept: "business",
+        grid: "business-building",
+        title: "3.2 Контур с небом",
+        file: "Welcome_to_Luma_A_с небом.mp4",
+        tags: ["контур", "воздух", "день"],
+        copy: "Более воздушная версия появления знака. Ее можно рассматривать внутри фасадно-знакового направления третьей концепции.",
+        note: "Оставить в третьем блоке как более светлый дневной вариант появления логотипа."
+      },
+      {
+        concept: "business",
+        grid: "business-building",
+        title: "3.2 Контур без неба",
+        file: "Welcome_to_Luma_A_без неба контур не четкий.mp4",
+        tags: ["контур", "минимализм", "доработка"],
+        copy: "Минималистичная версия появления знака. Сейчас ее лучше показывать как вариант, где нужно усилить четкость контура.",
+        note: "Важное замечание для руководства: идея может остаться в третьем блоке, но перед финалом потребуется более чистый контур."
+      },
+      {
+        concept: "business",
+        grid: "business-city",
+        title: "3.1 Кинематографичный город",
+        file: "Hailuo_Video_Cinematic aerial shot of Mosco_512309941690114053.mp4",
+        tags: ["город", "масштаб", "статус"],
+        recommended: true,
+        copy: "Самый прямой деловой вариант: город считывается сразу, появляется ощущение масштаба, статуса и движения.",
+        note: "Главный кандидат внутри 3.1, если хотим говорить именно языком большого города."
+      },
+      {
+        concept: "business",
+        grid: "business-city",
+        title: "3.1 Город сверху и световая траектория",
+        file: "8288ba0504d11f1904db6c3cf370372.mp4",
+        tags: ["город", "траектория", "ночь"],
+        copy: "Городская сцена с движением света. Хорошо передает жизнь города и может работать как ночная вариация делового направления.",
+        note: "Показывать как более динамичный и менее буквальный вариант 3.1."
+      },
+      {
+        concept: "business",
+        grid: "business-building",
+        title: "3.2 Фасад и бензиновый свет",
+        file: "Welcome_to_Luma_In_бензиновый свет.mp4",
+        tags: ["здание", "логотип", "технологичность"],
+        recommended: true,
+        copy: "Логотип проявляется на фасаде здания. Вариант выглядит деловым, технологичным и хорошо попадает в подтип 3.2.",
+        note: "Сильный кандидат, если нужно меньше панорамы города и больше статуса конкретного объекта."
+      },
+      {
+        concept: "business",
+        grid: "business-building",
+        title: "3.2 Фасад и теплый свет",
+        file: "Welcome_to_Luma_теплый свет.mp4",
+        tags: ["здание", "теплый свет", "вечер"],
+        copy: "Более мягкая версия фасадного сценария. Сохраняет деловой тон, но делает вход менее холодным и более спокойным.",
+        note: "Хорошая альтернатива, если бензиновый свет покажется слишком активным."
+      },
+      {
+        concept: "business",
+        grid: "business-building",
+        title: "3.2 Золотой знак на здании",
+        file: "7e0935751b911f188c3ae65f54209d0.mp4",
+        tags: ["здание", "золото", "статус"],
+        copy: "Самый теплый и премиальный по ощущению фасадный вариант. Подходит, если нужен более статусный и спокойный финальный кадр.",
+        note: "Сравнить с бензиновым вариантом: здесь меньше технологичности, но больше премиальности."
+      }
+    ];
+
+    const conceptLabels = {
+      natural: "Концепция 1: натуралистичный подход",
+      park: "Концепция 2: парк-логотип",
+      business: "Концепция 3: деловой город"
+    };
+
+    const grids = document.querySelectorAll("[data-grid]");
+    const filters = document.querySelectorAll(".filter-button");
+    const sections = document.querySelectorAll("[data-section]");
+    const viewer = document.querySelector("#viewer");
+    const viewerVideo = document.querySelector("#viewer-video");
+    const viewerImage = document.querySelector("#viewer-image");
+    const viewerConcept = document.querySelector("#viewer-concept");
+    const viewerTitle = document.querySelector("#viewer-title");
+
+    document.querySelector("#total-count").textContent = String(variants.length);
+
+    grids.forEach((grid) => {
+      variants
+        .filter((variant) => variant.grid === grid.dataset.grid)
+        .forEach((variant, index) => grid.appendChild(createCard(variant, index)));
+    });
+
+    filters.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+        filters.forEach((item) => item.classList.toggle("is-active", item === button));
+        sections.forEach((section) => {
+          section.classList.toggle("is-hidden", filter !== "all" && section.dataset.section !== filter && section.dataset.section !== "all");
+        });
+      });
+    });
+
+    document.querySelector("[data-close]").addEventListener("click", closeViewer);
+    viewer.addEventListener("click", (event) => {
+      if (event.target === viewer) {
+        closeViewer();
+      }
+    });
+    viewer.addEventListener("close", () => {
+      viewerVideo.pause();
+      viewerVideo.removeAttribute("src");
+      viewerVideo.load();
+      viewerImage.removeAttribute("src");
+      viewerImage.alt = "";
+    });
+
+    function createCard(variant, index) {
+      const card = document.createElement("article");
+      card.className = "variant";
+      card.dataset.concept = variant.concept;
+      card.dataset.title = variant.title;
+
+      const mediaHtml = variant.media === "image"
+        ? `<img src="${variant.file}" alt="${variant.title}">`
+        : `<video src="${variant.file}" preload="metadata" controls muted playsinline></video>`;
+
+      card.innerHTML = `
+        <div class="media-wrap">${mediaHtml}</div>
+        <div class="variant-body">
+          <div class="variant-title">
+            <h3>${variant.title}</h3>
+          </div>
+          <div class="actions">
+            <button class="primary-button" type="button" data-open>Открыть крупно</button>
+          </div>
+        </div>
+      `;
+
+      const media = card.querySelector("video, img");
+
+      card.querySelector("[data-open]").addEventListener("click", () => {
+        document.querySelectorAll("video").forEach((item) => {
+          if (item !== viewerVideo) {
+            item.pause();
+          }
+        });
+        viewerConcept.textContent = conceptLabels[variant.concept] || "Вариант";
+        viewerTitle.textContent = variant.title;
+
+        if (variant.media === "image") {
+          viewerVideo.pause();
+          viewerVideo.removeAttribute("src");
+          viewerVideo.load();
+          viewerVideo.classList.add("viewer-media-hidden");
+          viewerImage.src = media.getAttribute("src");
+          viewerImage.alt = variant.title;
+          viewerImage.classList.remove("viewer-media-hidden");
+        } else {
+          viewerImage.removeAttribute("src");
+          viewerImage.alt = "";
+          viewerImage.classList.add("viewer-media-hidden");
+          viewerVideo.classList.remove("viewer-media-hidden");
+          viewerVideo.src = media.currentSrc || media.getAttribute("src");
+        }
+
+        viewer.showModal();
+        if (variant.media !== "image") {
+          viewerVideo.play().catch(() => {});
+        }
+      });
+
+      return card;
+    }
+
+    function closeViewer() {
+      viewer.close();
+    }
+  </script>
+</body>
+</html>
