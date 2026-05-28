@@ -479,13 +479,14 @@
     <div class="topbar-inner">
       <div>
         <p class="eyebrow">Материал для выбора направления</p>
-        <h1>Сплэши приложения: три концепции</h1>
+        <h1>Сплэши приложения: четыре концепции</h1>
       </div>
       <nav class="filters" aria-label="Фильтры концепций">
         <button class="filter-button is-active" type="button" data-filter="all">Все</button>
         <button class="filter-button" type="button" data-filter="natural">1. Натура</button>
         <button class="filter-button" type="button" data-filter="park">2. Парк-логотип</button>
         <button class="filter-button" type="button" data-filter="business">3. Город</button>
+        <button class="filter-button" type="button" data-filter="creative">4. Творческий</button>
       </nav>
     </div>
   </header>
@@ -493,12 +494,12 @@
   <section class="summary">
     <div class="summary-grid">
       <p class="lead">
-        Логика презентации теперь строится вокруг трех больших концепций. Важно выбрать не один красивый ролик,
+        Логика презентации теперь строится вокруг четырех больших концепций. Важно выбрать не один красивый ролик,
         а систему первого впечатления: живой реализм по времени клиента, сезонный парк в форме логотипа или
-        деловой город со статусом, движением и жизнью.
+        деловой город со статусом, движением и жизнью. Отдельно добавлен экспериментальный творческий подход.
       </p>
       <aside class="quick-info" aria-label="Сводка">
-        <div class="metric"><span>Концепций</span><span>3</span></div>
+        <div class="metric"><span>Концепций</span><span>4</span></div>
         <div class="metric"><span>Роликов в подборке</span><span id="total-count">0</span></div>
         <div class="metric"><span>Решение на встрече</span><span>выбрать систему, затем вариант</span></div>
       </aside>
@@ -607,6 +608,32 @@
         </div>
         <div class="variant-grid" data-grid="business-building"></div>
       </div>
+    </section>
+
+    <section class="concept" data-section="creative">
+      <div class="concept-head">
+        <div>
+          <p class="eyebrow">Концепция 4</p>
+          <h2>Творческий подход</h2>
+          <p class="concept-copy">
+            Более экспериментальное направление: абстрактная графика, типографика, пиксельная эстетика и свободные
+            визуальные метафоры. Такой подход может сделать сплэш более заметным и эмоциональным.
+          </p>
+        </div>
+        <p class="rationale">
+          Обоснование: подходит, если хочется уйти от прямого изображения природы, города или логотипа и проверить
+          более смелый визуальный язык. Все ролики в этом блоке подготовлены без нижнего водяного знака.
+        </p>
+      </div>
+
+      <div class="scenario-strip">
+        <div class="scenario"><strong>Абстракция</strong><p>Свободная графика и цветовой жест.</p></div>
+        <div class="scenario"><strong>Типографика</strong><p>Смысл через короткую фразу или ритм текста.</p></div>
+        <div class="scenario"><strong>Пиксель / glitch</strong><p>Более цифровой и экспериментальный тон.</p></div>
+        <div class="scenario"><strong>Символ</strong><p>Не буквальный логотип, а настроение вокруг формы.</p></div>
+      </div>
+
+      <div class="variant-grid" data-grid="creative"></div>
     </section>
 
   </main>
@@ -749,13 +776,77 @@
         tags: ["здание", "золото", "статус"],
         copy: "Самый теплый и премиальный по ощущению фасадный вариант. Подходит, если нужен более статусный и спокойный финальный кадр.",
         note: "Сравнить с бензиновым вариантом: здесь меньше технологичности, но больше премиальности."
+      },
+      {
+        concept: "creative",
+        grid: "creative",
+        title: "4.1 Эффект стекла и воды",
+        file: "creative-splashes/creative-color-skull.mp4",
+        tags: ["абстракция", "цвет", "контур"],
+        copy: "Экспериментальная графика с ярким цветовым жестом и свободной формой.",
+        note: "Показывать как самый арт-направленный вариант четвертой концепции."
+      },
+      {
+        concept: "creative",
+        grid: "creative",
+        title: "4.2 Минималистичная фраза",
+        file: "creative-splashes/creative-minimal-message.mp4",
+        tags: ["типографика", "минимализм"],
+        copy: "Спокойный вариант, где акцент сделан на фразе и пустом пространстве.",
+        note: "Может работать как более тихий, редакционный вариант творческого подхода."
+      },
+      {
+        concept: "creative",
+        grid: "creative",
+        title: "4.3 Пиксельные иконки ассистентов",
+        file: "creative-splashes/creative-pixel-symbol.mp4",
+        tags: ["pixel", "digital"],
+        copy: "Цифровая эстетика с простым пиксельным знаком.",
+        note: "Проверяет более технологичный и экспериментальный визуальный язык."
+      },
+      {
+        concept: "creative",
+        grid: "creative",
+        title: "4.4 Мозаичный клевер",
+        file: "creative-splashes/creative-mosaic-clover.mp4",
+        tags: ["клевер", "мозаика"],
+        copy: "Знаковая форма в мягкой мозаичной графике.",
+        note: "Связывает творческий подход с узнаваемым мотивом логотипа."
+      },
+      {
+        concept: "creative",
+        grid: "creative",
+        title: "4.5 Линейная тетрадная графика",
+        file: "creative-splashes/creative-notebook-lines.mp4",
+        tags: ["линии", "графика"],
+        copy: "Графический вариант с ощущением наброска, схемы или живого рисунка.",
+        note: "Может быть полезен, если нужен более рукотворный и легкий тон."
+      },
+      {
+        concept: "creative",
+        grid: "creative",
+        title: "4.6 Мягкий клевер",
+        file: "creative-splashes/creative-soft-clover.mp4",
+        tags: ["клевер", "мягкий"],
+        copy: "Легкая цветная версия знака без прямой реалистичности.",
+        note: "Более дружелюбный вариант внутри творческой группы."
+      },
+      {
+        concept: "creative",
+        grid: "creative",
+        title: "4.7 Glitch-паттерн",
+        file: "creative-splashes/creative-glitch-pattern.mp4",
+        tags: ["glitch", "digital"],
+        copy: "Контрастный цифровой паттерн с более резким характером.",
+        note: "Показывать как самый смелый и экспериментальный вариант."
       }
     ];
 
     const conceptLabels = {
       natural: "Концепция 1: натуралистичный подход",
       park: "Концепция 2: парк-логотип",
-      business: "Концепция 3: деловой город"
+      business: "Концепция 3: деловой город",
+      creative: "Концепция 4: творческий подход"
     };
 
     const grids = document.querySelectorAll("[data-grid]");
