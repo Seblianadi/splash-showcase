@@ -128,6 +128,13 @@
       background: #0b625c;
     }
 
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
     .summary,
     main {
       max-width: 1360px;
@@ -186,6 +193,39 @@
       text-align: right;
     }
 
+    .navigation-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: center;
+      max-width: 1360px;
+      margin: 18px auto 0;
+      padding: 18px 28px;
+    }
+
+    .navigation-card-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      width: 100%;
+      border: 1px solid rgba(15, 118, 110, 0.18);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(15, 118, 110, 0.1), rgba(40, 94, 142, 0.09)), var(--panel);
+      box-shadow: 0 10px 30px rgba(29, 35, 43, 0.08);
+      padding: 18px;
+    }
+
+    .navigation-card h2 {
+      font-size: 22px;
+    }
+
+    .navigation-card p {
+      max-width: 720px;
+      margin: 6px 0 0;
+      color: #48515d;
+    }
+
     main {
       padding-top: 8px;
       padding-bottom: 58px;
@@ -220,7 +260,13 @@
       color: #24423f;
     }
 
-    .scenario-strip,
+    .scenario-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0 20px;
+    }
+
     .scenario {
       min-height: 100%;
       border: 1px solid var(--line);
@@ -393,6 +439,7 @@
       }
 
       .summary-grid,
+      .navigation-card-inner,
       .concept-head,
       .dialog-body {
         grid-template-columns: 1fr;
@@ -410,6 +457,7 @@
       }
 
       .summary,
+      .navigation-card,
       main {
         padding-left: 18px;
         padding-right: 18px;
@@ -454,6 +502,17 @@
         <div class="metric"><span>Роликов в подборке</span><span id="total-count">0</span></div>
         <div class="metric"><span>Решение на встрече</span><span>выбрать систему, затем вариант</span></div>
       </aside>
+    </div>
+  </section>
+
+  <section class="navigation-card" aria-label="Переход к wellness-прототипам">
+    <div class="navigation-card-inner">
+      <div>
+        <p class="eyebrow">Новый раздел</p>
+        <h2>AI Wellness Prototypes</h2>
+        <p>Прототипы новых сервисов: дневник питания и фитнес-ассистент.</p>
+      </div>
+      <a class="primary-button" href="wellness.html">Посмотреть прототипы</a>
     </div>
   </section>
 
